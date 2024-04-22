@@ -123,10 +123,13 @@ class Player {
     switch (mouseButton) {
       case LEFT:
         shoot();
+        if (room != null) {
+          shootingSound.play();
     }
   }
 
   void increaseBulletCount() {
+    powerupSound.play();
     bulletCount++;
   }
 }
