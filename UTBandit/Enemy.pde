@@ -9,6 +9,11 @@ class Enemy {
   float radius;
   color c;
 
+  float roomLeftBound = width / 2 - room.roomWidth / 2;
+  float roomRightBound = width / 2 + room.roomWidth / 2;
+  float roomTopBound = height / 2 - room.roomHeight / 2;
+  float roomBottomBound = height / 2 + room.roomHeight / 2;
+
   Enemy(int h, int damage, int diff) {
     health = h;
     maxHealth = h;
@@ -33,18 +38,33 @@ class Enemy {
   }
 
   void update(ArrayList<Enemy> otherEnemies) {
-    PVector target = PVector.sub(player.position, position);
-    target.normalize();
-    target.mult(speed);
-    
-    PVector avoidCollision = avoidCollisions(otherEnemies);
-    avoidCollision.mult(1.2);
-    target.add(avoidCollision);
-
-    PVector move = PVector.sub(target, direction);
-    direction.add(move);
-
-    position.add(direction);
+      PVector target = PVector.sub(player.position, position);
+      target.normalize();
+      target.mult(speed);
+      
+      PVector avoidCollision = avoidCollisions(otherEnemies);
+      avoidCollision.mult(1.2);
+      target.add(avoidCollision);
+  
+      PVector move = PVector.sub(target, direction);
+      direction.add(move);
+  
+      // Calculate the next position based on the direction
+      PVector nextPosition = PVector.add(position, direction);
+  
+      if (nextPosition.x > roomLeftBound && nextPosition.x < roomRightBound) {
+          position.x = nextPosition.x; // Update x position if within horizontal bounds
+      } else {
+          // If the next position would exceed the horizontal bounds, reverse the direction
+          direction.x *= -1;
+      }
+  
+      if (nextPosition.y > roomTopBound && nextPosition.y < roomBottomBound) {
+          position.y = nextPosition.y; // Update y position if within vertical bounds
+      } else {
+          // If the next position would exceed the vertical bounds, reverse the direction
+          direction.y *= -1;
+      }
   }
 
   void display() {
