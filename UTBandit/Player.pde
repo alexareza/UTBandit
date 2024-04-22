@@ -125,6 +125,7 @@ class Player {
         shoot();
         if (room != null) {
           shootingSound.play();
+      }
     }
   }
 
