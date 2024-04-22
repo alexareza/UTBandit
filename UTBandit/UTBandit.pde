@@ -1,3 +1,4 @@
+import processing.sound.*;
 PImage backgroundImage;
 Player player;
 
@@ -54,6 +55,13 @@ int gameState = NOT_STARTED;
 int startTime;
 int timePlayed;
 
+SoundFile powerupSound;
+SoundFile shootingSound;
+SoundFile keySound;
+SoundFile gameOverSound;
+SoundFile gameWonSound;
+SoundFile gameSound;
+
 
 void setup() {
   size(1000, 800);
@@ -86,6 +94,17 @@ void setup() {
   endScreen = new EndScreen();
   startScreen = new StartScreen();
   scoreBoard = new ScoreBoard();
+
+  gameSound = new SoundFile(this, "gamesound.mp3");
+  powerupSound = new SoundFile(this, "powerup.mp3");
+  shootingSound = new SoundFile(this, "shooting.mp3");
+  keySound = new SoundFile(this, "keySound.mp3");
+  gameOverSound = new SoundFile(this, "gameover.mp3");
+  gameWonSound = new SoundFile(this, "gamewon.mp3");
+  
+  Sound.volume(.2);
+  gameSound.loop();
+  gameSound.play();
 }
 
 void draw() {
