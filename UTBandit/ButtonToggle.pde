@@ -21,6 +21,5 @@ class ButtonToggle extends Button {
   void callback() {
     super.callback();
     this.state = !this.state;
-    //println("Changed state to " + this.state);
   }
 }

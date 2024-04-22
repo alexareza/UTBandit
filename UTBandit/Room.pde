@@ -8,18 +8,18 @@ class Room {
     PImage cave;
     float boxX;
     float boxY;
-    PImage tileTexture; // Texture image for tiling
-  int tileSize = 50; // Size of each tile
+    PImage floorTexture; 
+    PImage outsideTexture;
+    int tileSize = 100; // Size of each tile
     
   Room() {
     rectMode(CENTER);
     imageMode(CENTER);
     generateRoom();
-    //tileTexture = loadImage("testfloor.jpg");
-    roomTexture = loadImage("floor3.jpeg");
-    roomTexture.resize(roomWidth, roomHeight);
-    cave = loadImage("cave_entrance.jpg");
-    cave.resize(width, height);
+    floorTexture = loadImage("roomfloor.jpeg");
+    outsideTexture = loadImage("outside.jpg");
+    outsideTexture.resize(200,200);
+    floorTexture.resize(100,100);
     
     exit = new ButtonToggle(60, 95, s*3, s *1.5, "exit");
     
@@ -27,9 +27,11 @@ class Room {
 
   void display() {
     rectMode(CENTER);
-    background(cave);
-    //drawRoomTexture();
-    image(roomTexture, width/2, height/2);
+    //background(cave);
+    drawOutside();
+    
+    drawRoomTexture(floorTexture);
+    //image(roomTexture, width/2, height/2);
     
     // room border 
     stroke(30); 
@@ -66,9 +68,7 @@ class Room {
 
     if (player.health <= 0) {
       gameState = LOST;
-      //if (player.score > gameOverScreen.highScore) {
-      //  gameOverScreen.highScore = player.score;
-      //}
+
     }
     
     if (gameState == WON || gameState == LOST) {
@@ -77,20 +77,13 @@ class Room {
       return; 
     }
     
-    int currentTime = millis();
-    int elapsedTime = currentTime - lastSpawnTime;
-    
+    int currentTime = millis();    
     if (currentTime - lastTime >= interval) {
       difficulty += .5;
       lastTime = millis();
     }
-
-
     checkRoomCompleted();
-    
-    updateEntities();
-    
-    
+    updateEntities(); 
       
     if (enemies.isEmpty() && keys == null) {
       // Create a key
@@ -155,6 +148,8 @@ class Room {
   void generateRoom() {
     roomWidth = int(random(roomMinWidth, roomMaxWidth));
     roomHeight = int(random(roomMinHeight, roomMaxHeight));
+    roomWidth = round(roomWidth / tileSize) * tileSize;
+    roomHeight = round(roomHeight / tileSize) * tileSize;
     boxX = roomWidth / 2;
     boxY = roomHeight / 2;
     
@@ -165,7 +160,6 @@ class Room {
     // Check for collision with the key
     if (keys != null && keys.collidesWithPlayer(player)) {
       keyCollected = true;
-      //room = null;
       updateTracker();
       pma.state = false;
       gdc.state = false;
@@ -199,7 +193,6 @@ class Room {
         roomsCompleted[4] = true; // Set PCL room completed to true
         break;
       default:
-        // Handle unknown labels or do nothing
         break;
      }
   }
@@ -221,7 +214,6 @@ class Room {
     }
     
     // Remove enemies and bullets
-    
     for (Bullet bullet : bullets) {
       for (Enemy enemy : enemies) {
         if (bullet.hits(enemy)) {
@@ -243,29 +235,41 @@ class Room {
     bulletsToRemove.clear();
   }
   
-  void drawRoomTexture() {
+  void drawRoomTexture(PImage texture) {
+    tileSize = 100;
     imageMode(CORNER);
-    // Calculate the number of tiles needed in each direction
+    // Calculate  number of images needed 
     int numHorizontalTiles = room.roomWidth / tileSize;
     int numVerticalTiles = room.roomHeight / tileSize;
-  //centerX - boxX + 10, centerX + boxX) -10, random(centerY - boxY +10, centerY + boxY - 10)
     // Draw tiles row by row
     for (int y = 0; y < numVerticalTiles; y++) {
       for (int x = 0; x < numHorizontalTiles; x++) {
-        // Calculate the position of the current tile
         
         float xPos = width/2 - boxX + (x * tileSize);
         float yPos = height/2 - boxY + (y * tileSize);
-        //println(xPos, yPos);
-        //noLoop();
-
-  
-        // Draw the texture image at the current tile position
-        image(tileTexture, xPos, yPos, tileSize, tileSize);
+        image(texture, xPos, yPos, tileSize, tileSize);
+      }
     }
   }
-  }
   
+  void drawOutside() {
+    imageMode(CENTER);
+    tileSize = 200;
+    float xPos = 0;
+    float yPos = 0;
+    // Calculate number of tiles needed in each direction
+    int numHorizontalTiles = width / tileSize;
+    int numVerticalTiles = height / tileSize;
+    for (int y = 0; y < numVerticalTiles +1; y++) {
+      for (int x = 0; x < numHorizontalTiles +1; x++) {
+        // Calculate position of the current tile
+        xPos =  (x * tileSize);
+        yPos =  (y * tileSize);
+        image(outsideTexture, xPos, yPos, tileSize, tileSize);
+      }
+    }
+  }
+
    float getBoxX() {
     return boxX;
   }

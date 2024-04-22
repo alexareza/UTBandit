@@ -1,15 +1,16 @@
 import processing.sound.*;
 PImage backgroundImage;
+PImage grassTexture;
 Player player;
 
 EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
 
-boolean[] roomsCompleted = {true, true, true, true, true, false};
+//boolean[] roomsCompleted = {true, true, true, true, true, false};
 
-//boolean[] roomsCompleted = {false, false, false, false, false, false};
-
+boolean[] roomsCompleted = {false, false, false, false, false, false};
+int tileSize = 200;
 int roomTracker;
 Room rooms[];
 Room room;
@@ -68,8 +69,8 @@ SoundFile gameSound;
 void setup() {
   size(1000, 800);
   imageMode(CENTER);
-  background(181,222,186);
   backgroundImage = loadImage("map2.png");
+  grassTexture = loadImage("grass.jpg");
   // Resize map image to fit canvas size
   backgroundImage.resize(width, height);
   
@@ -125,20 +126,18 @@ void draw() {
       break;
     case WON:
       endScreen.show_win(timePlayed);
-      //scoreBoard.saveScore(timePlayed);
       endScreen.show_scoreBoard(scoreBoard);
       break;
   }
   
   // Check if game should be lost/won
-  //boolean WIN_CONDITION = false; // TODO: Change this to be correct win condition
   boolean LOSE_CONDITION = player.health <= 0;
   
   if (checkGameWon() && gameState != WON) {
     int timePlayed = (millis() - startTime);
-    println();
-    println(timePlayed);
-    println();
+    //println();
+    //println(timePlayed);
+    //println();
     gameState = WON;
     scoreBoard.saveScore(timePlayed);
   } else if (LOSE_CONDITION && gameState != LOST) {
@@ -258,8 +257,9 @@ void checkRoomChosen() {
    
   } else {
     room = null;
-    background(181,222,186);
-    
+    //drawOutsides();
+    //background(181,222,186);
+    drawOutside();
     image(backgroundImage, width/2, height/2);
     
     pma.show();
@@ -313,4 +313,23 @@ void keyReleased() {
 
 void mouseMoved() {
   player.onMouseMoved();
+}
+
+void drawOutside() {
+  imageMode(CENTER);
+  float xPos = 0;
+  float yPos = 0;
+  // calculate the number of images needed in each direction
+  int numHorizontalTiles = width / tileSize;
+  int numVerticalTiles = height / tileSize;
+  // draw each image
+  for (int y = 0; y < numVerticalTiles +1; y++) {
+    for (int x = 0; x < numHorizontalTiles +1; x++) {
+      // calculate the position of current tile
+      xPos = x * tileSize;
+      yPos = y * tileSize;
+      image(grassTexture, xPos, yPos, tileSize, tileSize);
+    
+    }
+  }
 }

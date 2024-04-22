@@ -18,14 +18,10 @@ class Enemy {
     health = h;
     maxHealth = h;
     damageAmt = damage;
-    levelMultiplier = 3; // Default multiplier
-
-    
+    levelMultiplier = 3;
     
     float centerX = width/2;
     float centerY = height/2;
-    //float boxX = room.roomWidth / 2;
-    //float boxY = room.roomHeight / 2;
 
     boxX = room.getBoxX();
     boxY = room.getBoxY();
