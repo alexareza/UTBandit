@@ -20,8 +20,8 @@ class ScoreBoard {
   String scoreString() {
     int[] scores = sort(loadScores());
     String result = "";
-    for (int i = 1; i < min(scores.length, 3); i++) {
-      result += i + ": " + formatScore(scores[i-1]) + "\n";
+    for (int i = 0; i < min(scores.length, 3); i++) {
+      result += i +1 + ": " + formatScore(scores[i]/100) + "\n";
     }
     return result;
   }

@@ -5,6 +5,7 @@ Player player;
 EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
+
 boolean[] roomsCompleted = {true, true, true, true, true, false};
 
 //boolean[] roomsCompleted = {false, false, false, false, false, false};
@@ -103,7 +104,7 @@ void setup() {
   gameOverSound = new SoundFile(this, "gameover.mp3");
   gameWonSound = new SoundFile(this, "gamewon.mp3");
   
-  Sound.volume(.2);
+  Sound.volume(.03);
   gameSound.loop();
   gameSound.play();
 }
