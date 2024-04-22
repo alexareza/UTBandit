@@ -10,8 +10,9 @@ class EndScreen {
   
   void show_scoreBoard(ScoreBoard scoreBoard) {
     textAlign(CENTER, BOTTOM);
-    fill(255);
-    text(scoreBoard.scoreString(), width / 2, height - 10);
+    fill(0);
+    text("Scoreboard", width / 2, height - 200);
+    text(scoreBoard.scoreString(), width / 2, height - 100);
   }
   
   void show_play_again_button() {
@@ -20,7 +21,7 @@ class EndScreen {
     rect(width/2, height/2 + 100, 150, 50, 10);
     fill(255);
     textSize(20);
-    text("Play Again", width/2, height/2 + 100);
+    text("Play Again", width/2, height/2 + 95);
   }
   
   void show_score_this_run(int secondsPlayed) {

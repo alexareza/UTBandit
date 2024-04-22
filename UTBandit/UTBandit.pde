@@ -103,9 +103,9 @@ void setup() {
   gameOverSound = new SoundFile(this, "gameover.mp3");
   gameWonSound = new SoundFile(this, "gamewon.mp3");
   
-  //Sound.volume(.2);
-  //gameSound.loop();
-  //gameSound.play();
+  Sound.volume(.2);
+  gameSound.loop();
+  gameSound.play();
 }
 
 void draw() {
@@ -124,7 +124,7 @@ void draw() {
       break;
     case WON:
       endScreen.show_win(timePlayed);
-      scoreBoard.saveScore(timePlayed);
+      //scoreBoard.saveScore(timePlayed);
       endScreen.show_scoreBoard(scoreBoard);
       break;
   }
