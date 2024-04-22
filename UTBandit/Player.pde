@@ -48,11 +48,28 @@ class Player {
   }
   
   void update_position() {
-    this.position.add(this.movement.mult(1));
-    if (this.movement.mag() == 0) {
-      this.sprite.facing = this.sprite.IDLE;
-    }
-    update_look();
+      float roomLeftBound = width / 2 - room.roomWidth / 2;
+      float roomRightBound = width / 2 + room.roomWidth / 2;
+      float roomTopBound = height / 2 - room.roomHeight / 2;
+      float roomBottomBound = height / 2 + room.roomHeight / 2;
+  
+      // Calculate the next position based on movement
+      PVector nextPosition = PVector.add(position, movement);
+  
+      // Check if the next position is within the bounds of the room
+      if (nextPosition.x -20 > roomLeftBound && nextPosition.x +20 < roomRightBound) {
+          position.x = nextPosition.x; // Update x position if within horizontal bounds
+      } else {
+          movement.x = 0;
+      }
+  
+      if (nextPosition.y - 20> roomTopBound && nextPosition.y +20 < roomBottomBound) {
+          position.y = nextPosition.y; // Update y position if within vertical bounds
+      } else {
+          movement.y = 0;
+      }
+  
+      update_look();
   }
   
   void update_look() {
