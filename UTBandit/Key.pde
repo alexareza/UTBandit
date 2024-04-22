@@ -18,6 +18,7 @@ class Keys {
     
     radius = 3;
     initializeSprite(); // Initialize the sprite when creating a new Keys object
+    keySound.play();
   }
 
   void initializeSprite() {
