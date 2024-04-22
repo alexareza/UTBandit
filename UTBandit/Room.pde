@@ -8,12 +8,14 @@ class Room {
     PImage cave;
     float boxX;
     float boxY;
+    PImage tileTexture; // Texture image for tiling
+  int tileSize = 50; // Size of each tile
     
   Room() {
     rectMode(CENTER);
     imageMode(CENTER);
     generateRoom();
-
+    //tileTexture = loadImage("testfloor.jpg");
     roomTexture = loadImage("floor3.jpeg");
     roomTexture.resize(roomWidth, roomHeight);
     cave = loadImage("cave_entrance.jpg");
@@ -26,6 +28,7 @@ class Room {
   void display() {
     rectMode(CENTER);
     background(cave);
+    //drawRoomTexture();
     image(roomTexture, width/2, height/2);
     
     // room border 
@@ -238,6 +241,29 @@ class Room {
     
     bullets.removeAll(bulletsToRemove);
     bulletsToRemove.clear();
+  }
+  
+  void drawRoomTexture() {
+    imageMode(CORNER);
+    // Calculate the number of tiles needed in each direction
+    int numHorizontalTiles = room.roomWidth / tileSize;
+    int numVerticalTiles = room.roomHeight / tileSize;
+  //centerX - boxX + 10, centerX + boxX) -10, random(centerY - boxY +10, centerY + boxY - 10)
+    // Draw tiles row by row
+    for (int y = 0; y < numVerticalTiles; y++) {
+      for (int x = 0; x < numHorizontalTiles; x++) {
+        // Calculate the position of the current tile
+        
+        float xPos = width/2 - boxX + (x * tileSize);
+        float yPos = height/2 - boxY + (y * tileSize);
+        //println(xPos, yPos);
+        //noLoop();
+
+  
+        // Draw the texture image at the current tile position
+        image(tileTexture, xPos, yPos, tileSize, tileSize);
+    }
+  }
   }
   
    float getBoxX() {

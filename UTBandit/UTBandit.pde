@@ -267,6 +267,7 @@ void checkRoomChosen() {
     pcl.show();
     tower.show();
     player.update_position();
+
     player.show();
     keyCollected = false;
   } 

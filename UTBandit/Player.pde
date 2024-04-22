@@ -48,6 +48,7 @@ class Player {
   }
   
   void update_position() {
+    if (room != null) {
       float roomLeftBound = width / 2 - room.roomWidth / 2;
       float roomRightBound = width / 2 + room.roomWidth / 2;
       float roomTopBound = height / 2 - room.roomHeight / 2;
@@ -70,6 +71,10 @@ class Player {
       }
   
       update_look();
+    } else {
+      this.position.add(this.movement.mult(1));
+      update_look();
+    }
   }
   
   void update_look() {
@@ -127,6 +132,7 @@ class Player {
           shootingSound.play();
       }
     }
+  }
   }
 
   void increaseBulletCount() {
