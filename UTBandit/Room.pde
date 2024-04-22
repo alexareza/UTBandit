@@ -1,7 +1,7 @@
 class Room {
-    int roomMinWidth = 400;
-    int roomMaxWidth = 950;
-    int roomMinHeight = 500;
+    int roomMinWidth = 500;
+    int roomMaxWidth = 900;
+    int roomMinHeight = 600;
     int roomMaxHeight = 800;
     int roomX, roomY, roomWidth, roomHeight;  
     PImage roomTexture;

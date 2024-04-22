@@ -21,7 +21,7 @@ class Sprite {
     }
   }
   
-  void display(float x, float y, int sizex, int sizy) {
+  void display(float x, float y, int sizex, int sizey) {
     image(frames[currentFrame], x, y, sizex, sizey);
   }
   

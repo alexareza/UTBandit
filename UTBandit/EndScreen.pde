@@ -36,7 +36,7 @@ class EndScreen {
   
   void show_win(int secondsPlayed) {
     show();
-    text("You Won!", width / 2, height / 2);
+    text("You Won!", width / 2, height / 4);
     show_score_this_run(secondsPlayed);
     show_play_again_button();
   }

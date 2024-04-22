@@ -20,7 +20,7 @@ class EntitySprite {
       for (int j = 0; j < N; j++) {
         String imageName = imageNamePrefix + "-" + DIRECTIONS[i] + "-" + nf(j + 1, 2) + imageNamePostfix;
         PImage frame = loadImage(imageName);
-        frame.resize(20, 40);
+        frame.resize(30, 60);
         frames[i][j] = frame;
       }
     }

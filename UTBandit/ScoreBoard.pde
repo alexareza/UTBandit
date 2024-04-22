@@ -1,17 +1,18 @@
 class ScoreBoard {
   
   void saveScore(int timePlayed) {
-    Table scores = loadTable("data/highscores.csv");
+    
+    Table scores = loadTable("data/highscores.csv", "header");
     TableRow newRow = scores.addRow();
     newRow.setInt(0, timePlayed);
     saveTable(scores, "data/highscores.csv");
   }
   
   int[] loadScores() {
-    Table scores = loadTable("highscores.csv");
+    Table scores = loadTable("highscores.csv", "header");
     int[] scoreList = new int[scores.getRowCount()];
     for (int i = 0; i < scoreList.length; i++) {
-      scoreList[i] = scores.getInt(0, i);
+      scoreList[i] = scores.getInt(i, 0);
     }
     return scoreList;
   }
@@ -19,7 +20,7 @@ class ScoreBoard {
   String scoreString() {
     int[] scores = sort(loadScores());
     String result = "";
-    for (int i = 1; i <= min(scores.length, 3); i++) {
+    for (int i = 0; i < min(scores.length, 3); i++) {
       result += i + ": " + formatScore(scores[i]) + "\n";
     }
     return result;

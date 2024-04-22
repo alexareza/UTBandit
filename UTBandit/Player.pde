@@ -9,7 +9,7 @@ class Player {
   EntitySprite sprite;
   
   Player() {
-    this.position = new PVector(width / 6, height / 2);
+    this.position = new PVector(width / 3, height / 2);
     this.look = new PVector(1, 1).div(sqrt(2));
     sprite = new EntitySprite("player", ".png", 4, 5);
   }
@@ -130,7 +130,6 @@ class Player {
         shoot();
         if (room != null) {
           shootingSound.play();
-      }
     }
   }
   }
