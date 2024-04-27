@@ -10,6 +10,7 @@ class Button extends Clickable {
   float strokeWeight;
   float textSize;
  
+ 
   Button(float x, float y, float s, float s2, String label, color fill, color stroke, color textColor, float strokeWeight, float textSize) {
     this.x = x;
     this.y = y;
@@ -70,7 +71,10 @@ class Button extends Clickable {
 }
   
   void callback() {
-    //println("Button Pressed");
+  }
+  
+  void setFillColor(color newColor) {
+    fill = newColor;
   }
   
 }

@@ -22,4 +22,8 @@ class ButtonToggle extends Button {
     super.callback();
     this.state = !this.state;
   }
+  
+  void setFillColor(color newColor) {
+    fill = newColor;
+  }
 }

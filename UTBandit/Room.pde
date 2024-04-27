@@ -177,7 +177,6 @@ class Room {
   // Check the label of the button and update the corresponding boolean value
     switch(roomTracker) {
       case 0:
-        println("room tracker updated");
         roomsCompleted[0] = true; 
         break;
       case 1:

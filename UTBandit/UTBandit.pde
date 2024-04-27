@@ -203,21 +203,24 @@ boolean checkRoomCompleted(int roomNum) {
   if (roomsCompleted[roomNum] == false) {
       room = rooms[roomNum];
       return false;
-   } 
+   }
    return true; 
 }
 
 void checkRoomChosen() {
+
   if (gdc.state) {
     roomTracker = 0;
     if (checkRoomCompleted(roomTracker) == true) {
-      
+      gdc.setFillColor(color(#C93D3D));
       gdc.state = false;
     }
   } else if (pma.state) {
     roomTracker = 1;
     if (checkRoomCompleted(roomTracker) == true) {
       pma.state = false;
+      pma.setFillColor(color(#C93D3D));
+      
     }
   
   } else if (stad.state) {
@@ -225,18 +228,21 @@ void checkRoomChosen() {
     roomTracker = 2;
     if (checkRoomCompleted(roomTracker) == true) {
       stad.state = false;
+      stad.setFillColor(color(#C93D3D));
     }
 
   } else if (mc.state) {
     //println("room mc");
     roomTracker = 3;
     if (checkRoomCompleted(roomTracker) == true) {
+      mc.setFillColor(color(#C93D3D));
       mc.state = false;
     }
 
   } else if (pcl.state) {
     roomTracker = 4;
     if (checkRoomCompleted(roomTracker) == true) {
+      pcl.setFillColor(color(#C93D3D));
       pcl.state = false;
     }
   } else if (tower.state) {
@@ -278,6 +284,8 @@ void checkRoomChosen() {
   } 
 }
 
+  
+
 boolean checkGameWon() {
   for (boolean roomCompleted: roomsCompleted) {
     if (!roomCompleted) {
@@ -286,6 +294,7 @@ boolean checkGameWon() {
   }
   return true;  
 }
+
 
 void resetGame() {
   player = new Player();
