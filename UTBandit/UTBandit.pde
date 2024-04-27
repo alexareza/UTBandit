@@ -1,6 +1,7 @@
 import processing.sound.*;
 PImage backgroundImage;
 PImage grassTexture;
+PFont gameFont;
 Player player;
 
 EndScreen endScreen;
@@ -69,7 +70,9 @@ SoundFile gameSound;
 void setup() {
   size(1000, 800);
   imageMode(CENTER);
-  backgroundImage = loadImage("map2.png");
+  gameFont = createFont("arcade.ttf", 40);
+  textFont(gameFont);
+  backgroundImage = loadImage("map.png");
   grassTexture = loadImage("grass.jpg");
   // Resize map image to fit canvas size
   backgroundImage.resize(width, height);

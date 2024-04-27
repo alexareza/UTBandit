@@ -269,13 +269,12 @@ class Room {
       }
     }
   }
-
-   float getBoxX() {
+  
+  float getBoxX() {
     return boxX;
   }
   
   float getBoxY() {
     return boxY;
   }
-  
 }
