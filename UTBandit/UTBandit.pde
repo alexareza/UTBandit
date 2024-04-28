@@ -125,7 +125,7 @@ void setup() {
 }
 
 void draw() {
-  println(timePlayed);
+  //println(timePlayed);
   switch (gameState) {
     case NOT_STARTED:
       startScreen.show();
@@ -162,10 +162,10 @@ void draw() {
   boolean LOSE_CONDITION = player.health <= 0;
   
   if (checkGameWon() && gameState != WON) {
-    int timePlayed = (millis() - startTime);
-
-    gameState = WON;
+    
+    timePlayed = (millis() - startTime);
     scoreBoard.saveScore(timePlayed);
+    gameState = WON;
   } else if (LOSE_CONDITION && gameState != LOST) {
     gameState = LOST;
   }

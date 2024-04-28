@@ -21,7 +21,7 @@ class ScoreBoard {
     int[] scores = sort(loadScores());
     String result = "";
     for (int i = 0; i < min(scores.length, 3); i++) {
-      result += i +1 + ": " + formatScore(scores[i]/100) + "\n";
+      result += i +1 + ": " + formatScore(scores[i]/1000) + " sec\n";
     }
     return result;
   }

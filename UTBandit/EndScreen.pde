@@ -42,7 +42,7 @@ class EndScreen {
   
   void show_score_this_run(int secondsPlayed) {
     textSize(20);
-    text("Time: " + secondsPlayed + " seconds", width/2, height/3 + 20);
+    text("Time: " + secondsPlayed/1000 + " seconds", width/2, height/3 + 20);
   }
 
   void show_loss() {
