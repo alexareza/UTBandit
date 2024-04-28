@@ -11,6 +11,8 @@ class Room {
     PImage floorTexture; 
     PImage outsideTexture;
     int tileSize = 100; // Size of each tile
+    PFont font = createFont("arcade2.ttf",50);
+    int enemiesDied;
     
   Room() {
     rectMode(CENTER);
@@ -20,19 +22,16 @@ class Room {
     outsideTexture = loadImage("outside.jpg");
     outsideTexture.resize(200,200);
     floorTexture.resize(100,100);
-    
     exit = new ButtonToggle(60, 95, s*3, s *1.5, "exit");
     
   }
 
   void display() {
+    // draw room graphics
     rectMode(CENTER);
-    //background(cave);
     drawOutside();
-    
     drawRoomTexture(floorTexture);
-    //image(roomTexture, width/2, height/2);
-    
+
     // room border 
     stroke(30); 
     strokeWeight(7); 
@@ -43,12 +42,12 @@ class Room {
   }
   
   void initializeGame() {
+    // show exit button
     exit.show();
-
-    textSize(24);
+    textSize(14);
     textAlign(CENTER, CENTER);
     fill(255);
-    text("EXIT", 60, 95);
+    text("EXIT", 62, 96);
     strokeWeight(2);
     
     // if the exit button is pressed
@@ -132,17 +131,17 @@ class Room {
     strokeWeight(1);
     fill(255, 0, 0);
     rect(20, 20, healthBarWidth, 20);
+    textFont(font);
     
     // display text for health bar/stats
-    textSize(18);
+    textSize(14);
     textAlign(LEFT); 
     fill(255);
     float percentage_health = (float(player.health) / 50) * 100;
     
-    text(nf(percentage_health, 0, 0)+ "%", 22, 36);
-    textSize(20);
+    text(nf(percentage_health, 0, 0)+ "%", 22, 38);
     text("Score: " + player.score, 20, 60);
-    text("Difficulty Multiplier:  x" + difficulty, 510, 36);
+    text("Difficulty Multiplier: x" + difficulty, 512, 38);
   }
   
   void generateRoom() {
@@ -152,7 +151,6 @@ class Room {
     roomHeight = round(roomHeight / tileSize) * tileSize;
     boxX = roomWidth / 2;
     boxY = roomHeight / 2;
-    
   }
   
   
@@ -208,6 +206,7 @@ class Room {
       
       if (enemy.hits(player)) {
         player.health -= enemy.damageAmt * 0.1;
+        enemiesDied += 1;
         enemiesToRemove.add(enemy);
       }
     }
@@ -230,6 +229,12 @@ class Room {
     enemies.removeAll(enemiesToRemove);
     enemiesToRemove.clear();
     
+    // Make sure that enemies that collided with the player respawn, preventing an "easy win" where player lets enemies hit player in early levels
+    for (int i = 0; i < enemiesDied; i++) {
+      int levelHealth = levels.determineHealth();
+      enemies.add(new Enemy(levelHealth, 10, 1));
+    }
+    enemiesDied = 0;
     bullets.removeAll(bulletsToRemove);
     bulletsToRemove.clear();
   }

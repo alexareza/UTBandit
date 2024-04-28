@@ -18,17 +18,17 @@ class Bullet {
   }
   
   void update() {
-      position.add(velocity);
-      for (Spark spark : sparks) {
-          spark.update(position.x, position.y, velocity.x, velocity.y); 
-      }
+    position.add(velocity);
+    for (Spark spark : sparks) {
+        spark.update(position.x, position.y, velocity.x, velocity.y); 
+    }
   }
   
   
   void display() {
     // Draw the bullet image at the bullet's position
     imageMode(CENTER);
-    image(bulletImage, position.x, position.y, 20, 20);
+    image(bulletImage, position.x, position.y, 15, 15);
     // Display spark particles
     for (Spark spark : sparks) {
       spark.display();

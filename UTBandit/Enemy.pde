@@ -13,6 +13,8 @@ class Enemy {
   float roomRightBound = width / 2 + room.roomWidth / 2;
   float roomTopBound = height / 2 - room.roomHeight / 2;
   float roomBottomBound = height / 2 + room.roomHeight / 2;
+  PImage enemySkin = loadImage("soot.png");
+  
 
   Enemy(int h, int damage, int diff) {
     health = h;
@@ -29,8 +31,8 @@ class Enemy {
         
     direction = new PVector(0, 0);
     speed = 0.5;
-    radius = 10;
-    c = color(random(255), random(255), random(255));
+    radius = 20;
+    //c = color(random(255), random(255), random(255));
   }
 
   void update(ArrayList<Enemy> otherEnemies) {
@@ -64,8 +66,9 @@ class Enemy {
   }
 
   void display() {
-    fill(c);
-    ellipse(position.x, position.y, 20, 20);
+    //fill(c);
+    image(enemySkin, position.x, position.y, 25, 25);
+    
     drawHealthBar(); // Call drawHealthBar to display health bar
   }
 

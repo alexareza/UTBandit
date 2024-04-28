@@ -96,7 +96,7 @@ class Levels {
       // Spawn enemies for the current level
       println(width/2 - boxX + 10, width/2 + boxX -10, height/2 - boxY +10, height/2 + boxY - 10);
       for (int i = 0; i < numEnemies; i++) {
-        int levelHealth = determineHealth ();
+        int levelHealth = determineHealth();
         //println("gen enemy",  room.roomX, room.roomY, room.roomWidth, room.roomHeight);
         enemies.add(new Enemy(levelHealth, 10, 1));
       }

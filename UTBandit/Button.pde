@@ -9,7 +9,8 @@ class Button extends Clickable {
   color textColor;
   float strokeWeight;
   float textSize;
- 
+  PFont font = createFont("arcade2.ttf",50);
+
  
   Button(float x, float y, float s, float s2, String label, color fill, color stroke, color textColor, float strokeWeight, float textSize) {
     this.x = x;
@@ -34,47 +35,59 @@ class Button extends Clickable {
   }
   
   void show() {
-    shapeMode(CENTER);
-    fill(fill);
-    noStroke();
-    //stroke(stroke);
-    strokeWeight(strokeWeight);
-    ellipse(x, y, s, s2);
+    if (this.label == "Instructions") {
+      shapeMode(CENTER);
+      fill(5, 95);
+      noStroke();
+      strokeWeight(strokeWeight);
+      rect(x, y, s, s2, 20);
 
-    textAlign(CENTER, CENTER);
-    fill(0);
+      fill(172,88,33);
+      textFont(font);
+      textSize(22);
+      text("HOW TO PLAY", x, y);
+
+    } else {
+      shapeMode(CENTER);
+      fill(fill);
+      noStroke();
+      //stroke(stroke);
+      strokeWeight(strokeWeight);
+      ellipse(x, y, s, s2);
+  
+      textAlign(CENTER, CENTER);
+      fill(0);
+    }
   }
   
   boolean isMouseInside() {
-  float distance = dist(mouseX, mouseY, this.x, this.y);
-  // Check if distance is less than or equal to the circle's radius
-  
-  // check if "exit" button is being pressed specifically
-  if (this.label == "exit" && exit != null) {
-    if (distance <= this.s/2) {
-      println(true);
-      return true; // Mouse is inside the circle
-    } else {
-      return false; // Mouse is outside the circle
-    }
-  }
+    float distance = dist(mouseX, mouseY, this.x, this.y);  
+    // check if "exit" button is being pressed specifically
+    if (this.label == "exit" && exit != null) {
+      if (distance <= this.s/2) {
+        return true; // Mouse is inside the circle
+      } else {
+        return false; // Mouse is outside the circle
+      }
+  } // instructions
+  else if (this.label == "Instructions") {
+      //back = new ButtonToggle(width/2, height-140, 150, 70, "BACK");
+
+    return (mouseX >= this.x - 150 && mouseX <= width/2 +150 && mouseY >= this.y - 35 && mouseY <= this.y +35);
+ }
   
   // every other button behavior
   else if (room == null) {
     if (distance <= this.s/2) {
       return true; // Mouse is inside the circle
     } else {
-      return false; // Mouse is outside the circle
-    }
-  }
+       return false; // Mouse is outside the circle
+   }
+ }
   return false;
-}
+  }
   
   void callback() {
-  }
-  
-  void setFillColor(color newColor) {
-    fill = newColor;
   }
   
 }

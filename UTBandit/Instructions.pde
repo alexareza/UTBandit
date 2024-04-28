@@ -1,4 +1,4 @@
-class StartScreen {
+class Instructions {
   // arrays for twinkling stars - all code with twinkling stars was referenced from
   // the following source: https://openprocessing.org/sketch/76969/
   float[] xStarPos = new float[250];
@@ -13,25 +13,22 @@ class StartScreen {
   int p = 10;
   // loading variables for start screen
   PImage bg = loadImage("roomfloor.jpeg");
-  PImage tower = loadImage("uttower.png");
+ PFont font = createFont("arcade2.ttf",50);
   PFont grassFont;
   float ytextPos = height / 2;
+  ButtonToggle button;
   
-
-  StartScreen() {
+  Instructions() {
     twinklingStars();
     imageMode(CENTER);
     textAlign(CENTER, CENTER);
     grassFont = createFont("grassfont.ttf", 150);
     bg.resize(200,200);
-    tower.resize(600,600);
-    
+    button = new ButtonToggle(width/2, 300, 300, 70, "Instructions");
   }
   
     
   void show() {
-
-    
     tileSize = 200;
     float xPos = 0;
     float yPos = 0;
@@ -54,25 +51,32 @@ class StartScreen {
     }
 
     fill(#6EF77C);
-    image(tower, width/2, height -120);
     textFont(grassFont);
+    textSize(90);
+    textAlign(CENTER);
+    text("I N S T R U C T I O N S", width / 2, height/7);
     
-    text("UT BANDIT", width / 2, height/6);
-    textFont(gameFont);
-
-    fill(255);
-    textSize(50);
-    float displacement = 20 * sin(TWO_PI * frameCount / 180);
-  
-    ytextPos = height -200 + displacement;
-    color c = color(5, 90);
+    color c = color(5, 95);
     fill(c);
-    rect(width/2, ytextPos, 700, 80, 20);
+    rect(width/2, height -350, 930, 600, 20);
+    
+    textFont(font);
     fill(255);
-    text("Press Any Key to Start", width / 2, ytextPos);
-
+    textAlign(CENTER);
+    textSize(20);
+    text("EACH CIRCLE ON THE MAP IS A ROOM. ENTER EACH\nROOM, DEFEAT THE ENEMIES, & COLLECT THE KEY!\nONCE YOU HAVE COLLECTED EVERY KEY, YOU CAN\nENTER AND CONQUER THE UT TOWER!", width /2, height/4);
+    textSize(25);
+    
+    text("WASD TO MOVE", width /2, height - 450);
+    text("POINT + CLICK TO SHOOT", width / 2, height - 400);
+    text("PRESS 1 TO RESET", width /2, height - 350);
+    text("COLLECT POWERUPS", width /2, height - 300);
+    text("SURVIVE", width /2, height - 250);
+    text("BEAT YOUR HIGH SCORE!", width /2, height - 200);
+    
+    
+    
   }
-  
 
   void twinklingStars() {
     for (int i=0; i < 250; i++) {

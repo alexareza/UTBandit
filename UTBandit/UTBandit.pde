@@ -1,9 +1,13 @@
 import processing.sound.*;
+
 PImage backgroundImage;
 PImage grassTexture;
+int tileSize = 200;
+
 PFont gameFont;
 Player player;
 
+Instructions instructions;
 EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
@@ -11,35 +15,39 @@ ScoreBoard scoreBoard;
 //boolean[] roomsCompleted = {true, true, true, true, true, false};
 
 boolean[] roomsCompleted = {false, false, false, false, false, false};
-int tileSize = 200;
-int roomTracker;
+
 Room rooms[];
 Room room;
-
 ButtonToggle pma;
 ButtonToggle gdc;
 ButtonToggle stad;
 ButtonToggle mc;
 ButtonToggle pcl;
 ButtonToggle tower;
-
 ButtonToggle exit;
-int s = 25;
+ButtonToggle howTo;
+ButtonToggle back;
+
+int roomTracker;
+
+
 
 boolean keyCollected = false;
-
 Keys keys;
 Levels levels = new Levels();
 Sprite keySprite;
 Sprite powerupSprite;
+
 ArrayList<Enemy> enemies;
 ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemiesToRemove;
 ArrayList<Bullet> bulletsToRemove;
 ArrayList<Powerup> powerups;
+
 float boxX;
 float boxY;
 
+int s = 25;
 int enemySpawnInterval = 1000; 
 int lastSpawnTime = 0;
 float difficulty = 1;
@@ -74,6 +82,8 @@ void setup() {
   textFont(gameFont);
   backgroundImage = loadImage("map.png");
   grassTexture = loadImage("grass.jpg");
+  
+
   // Resize map image to fit canvas size
   backgroundImage.resize(width, height);
   
@@ -82,7 +92,7 @@ void setup() {
   for (int i = 0; i < 6; i++) {
     rooms[i] = new Room();
   }
-  
+  //Button ellipseButton = new Button(100, 100, 50, "Ellipse Button", color(255), color(0), color(0), 1, 12);
   //tower = new ButtonToggle(x, y, s, "Tower")
   pma = new ButtonToggle(360, 165, s, s, "PMA");
   gdc = new ButtonToggle(370, 420, s, s, "GDC");
@@ -90,6 +100,8 @@ void setup() {
   mc = new ButtonToggle(685, 625, s, s, "MOODY CENTER");
   pcl = new ButtonToggle(275, 525, s, s, "PCL");
   tower = new ButtonToggle(217, 381, 28, 28, "TOWER");
+  howTo = new ButtonToggle(width/2, 300, 300, 70, "Instructions");
+  back = new ButtonToggle(width/2, height-140, 150, 70, "BACK");
   
   player = new Player();
   enemies = new ArrayList<Enemy>();
@@ -100,14 +112,15 @@ void setup() {
   endScreen = new EndScreen();
   startScreen = new StartScreen();
   scoreBoard = new ScoreBoard();
+  instructions = new Instructions();
 
+  // sound
   gameSound = new SoundFile(this, "gamesound.mp3");
   powerupSound = new SoundFile(this, "powerup.mp3");
   shootingSound = new SoundFile(this, "shooting.mp3");
   keySound = new SoundFile(this, "keySound.mp3");
   gameOverSound = new SoundFile(this, "gameover.mp3");
   gameWonSound = new SoundFile(this, "gamewon.mp3");
-  
   Sound.volume(.03);
   gameSound.loop();
   gameSound.play();
@@ -117,6 +130,19 @@ void draw() {
   switch (gameState) {
     case NOT_STARTED:
       startScreen.show();
+      howTo.show();
+      if (howTo.state) {
+        instructions.show();
+        back.show();
+        fill(255);
+        
+        text("BACK",width/2, height-140);
+
+      }
+      if (back.state) {
+        howTo.state = false;
+        back.state = false;
+      }
       break;
     case STARTED:
       image(backgroundImage,width/2,height/2);
@@ -138,9 +164,7 @@ void draw() {
   
   if (checkGameWon() && gameState != WON) {
     int timePlayed = (millis() - startTime);
-    //println();
-    //println(timePlayed);
-    //println();
+
     gameState = WON;
     scoreBoard.saveScore(timePlayed);
   } else if (LOSE_CONDITION && gameState != LOST) {
@@ -151,7 +175,10 @@ void draw() {
 void mousePressed() {
   // detect if a button has been pressed
   float buttonDistanceThreshold = 35; 
-  
+  if (gameState == NOT_STARTED) {
+    howTo.onMousePress();
+    back.onMousePress();
+  }
   // check the distance between the player and each button before allowing the click action
   if (dist(player.position.x, player.position.y, gdc.x, gdc.y) < buttonDistanceThreshold) {
     gdc.onMousePress();
@@ -187,16 +214,19 @@ void mousePressed() {
 
 
 void keyPressed() {
-  if (gameState == NOT_STARTED) {
+  if (!howTo.state) {
+    if (gameState == NOT_STARTED) {
     resetGame();
   } else {
     // Reset game if '1' key is pressed
-    if (key == '1') {
+    if (key == '1' & room == null) {
       resetGame();
     } else {
       player.onKeyPressed();
     }
   }
+  }
+  
 }
 
 boolean checkRoomCompleted(int roomNum) {
@@ -341,7 +371,6 @@ void drawOutside() {
       xPos = x * tileSize;
       yPos = y * tileSize;
       image(grassTexture, xPos, yPos, tileSize, tileSize);
-    
     }
   }
 }
