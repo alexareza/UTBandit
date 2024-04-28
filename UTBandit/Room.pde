@@ -64,7 +64,7 @@ class Room {
       //levels.increaseLevel();
       //gameState = STARTED;
       //resetGame();
-      player.position = new PVector(width/3,height/2);
+      player.position = new PVector(width/2,height/2);
       keys = null; // Reset the key
       exit.state = false;
     } 

@@ -12,9 +12,9 @@ EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
 
-boolean[] roomsCompleted = {true, true, true, true, true, false};
+//boolean[] roomsCompleted = {true, true, true, true, true, false};
 
-//boolean[] roomsCompleted = {false, false, false, false, false, false};
+boolean[] roomsCompleted = {false, false, false, false, false, false};
 
 Room rooms[];
 Room room;
@@ -337,7 +337,7 @@ void resetGame() {
   
   //gameState = NOT_STARTED;
   player = new Player();
-  howTo.state = false;
+  //howTo.state = false;
   enemies.clear();
   bullets.clear();
   powerups.clear();
@@ -349,8 +349,8 @@ void resetGame() {
 
 void restartGame() {
   player = new Player();
-  keyCollected = false;
-  howTo.state = false;
+  //keyCollected = false;
+  //howTo.state = false;
   
   enemies.clear();
   bullets.clear();
