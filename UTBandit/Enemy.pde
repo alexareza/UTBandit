@@ -8,7 +8,7 @@ class Enemy {
   float speed;
   float radius;
   color c;
-
+  
   float roomLeftBound = width / 2 - room.roomWidth / 2;
   float roomRightBound = width / 2 + room.roomWidth / 2;
   float roomTopBound = height / 2 - room.roomHeight / 2;

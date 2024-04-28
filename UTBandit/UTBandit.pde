@@ -12,9 +12,9 @@ EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
 
-//boolean[] roomsCompleted = {true, true, true, true, true, false};
+boolean[] roomsCompleted = {true, true, true, true, true, false};
 
-boolean[] roomsCompleted = {false, false, false, false, false, false};
+//boolean[] roomsCompleted = {false, false, false, false, false, false};
 
 Room rooms[];
 Room room;
@@ -29,8 +29,6 @@ ButtonToggle howTo;
 ButtonToggle back;
 
 int roomTracker;
-
-
 
 boolean keyCollected = false;
 Keys keys;
@@ -127,6 +125,7 @@ void setup() {
 }
 
 void draw() {
+  println(timePlayed);
   switch (gameState) {
     case NOT_STARTED:
       startScreen.show();
@@ -206,8 +205,14 @@ void mousePressed() {
   exit.onMousePress();
 
   if ((gameState == WON || gameState == LOST) && mouseX > width/2 - 75 && mouseX < width/2 + 75 && mouseY > height/2 + 75 && mouseY < height/2 + 125) { 
-    resetGame();
+    println(true);
+      for (int i = 0; i < 6; i++) {
+      roomsCompleted[i] = false;
+    }
+    restartGame();
+    
   } else {
+    
     player.onMousePressed(); // Call the onMousePressed method of the Player class
   }
 }
@@ -216,7 +221,7 @@ void mousePressed() {
 void keyPressed() {
   if (!howTo.state) {
     if (gameState == NOT_STARTED) {
-    resetGame();
+      resetGame();
   } else {
     // Reset game if '1' key is pressed
     if (key == '1' & room == null) {
@@ -276,18 +281,20 @@ void checkRoomChosen() {
       pcl.state = false;
     }
   } else if (tower.state) {
+    boolean complete = true;
     for (int i = 0; i < 5; i++) {
-      if (!roomsCompleted[i]) {
-        //return false; // If any of the first five rooms is not completed, return false
+      if (roomsCompleted[i] == false) {
+        complete = false;
       }
     }
-    roomsCompleted[5] = true; 
+    if (complete) {
+      roomsCompleted[5] = true; 
+    }
     
   } else {
-    //println("room null");
     room = null; 
   }
-    // only show buttons if we are not inside a room
+  // only show buttons if we are not inside a room
   if (room != null && !keyCollected) {
     room.display();
     player.update_position();
@@ -327,7 +334,10 @@ boolean checkGameWon() {
 
 
 void resetGame() {
+  
+  //gameState = NOT_STARTED;
   player = new Player();
+  howTo.state = false;
   enemies.clear();
   bullets.clear();
   powerups.clear();
@@ -339,6 +349,9 @@ void resetGame() {
 
 void restartGame() {
   player = new Player();
+  keyCollected = false;
+  howTo.state = false;
+  
   enemies.clear();
   bullets.clear();
   powerups.clear();

@@ -27,6 +27,7 @@ class Room {
   }
 
   void display() {
+    imageMode(CENTER);
     // draw room graphics
     rectMode(CENTER);
     drawOutside();
@@ -38,7 +39,6 @@ class Room {
     noFill();
     rect(width/2, height/2, roomWidth, roomHeight);
     initializeGame();
-    
   }
   
   void initializeGame() {
@@ -57,12 +57,16 @@ class Room {
       stad.state = false;
       mc.state = false;
       pcl.state = false;
+      room = null;
       image(backgroundImage,width/2,height/2);
-      levels.increaseLevel();
-      resetGame();
+      //enemies.clear();
+      levels.enemiesSpawned = false;
+      //levels.increaseLevel();
+      //gameState = STARTED;
+      //resetGame();
+      player.position = new PVector(width/3,height/2);
       keys = null; // Reset the key
       exit.state = false;
-    
     } 
 
     if (player.health <= 0) {
