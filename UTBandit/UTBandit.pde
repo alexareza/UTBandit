@@ -29,7 +29,7 @@ ButtonToggle howTo;
 ButtonToggle back;
 
 int roomTracker;
-
+boolean roomComplete = false;
 boolean keyCollected = false;
 Keys keys;
 Levels levels = new Levels();
@@ -125,6 +125,7 @@ void setup() {
 }
 
 void draw() {
+  
   //println(timePlayed);
   switch (gameState) {
     case NOT_STARTED:
@@ -205,8 +206,11 @@ void mousePressed() {
   exit.onMousePress();
 
   if ((gameState == WON || gameState == LOST) && mouseX > width/2 - 75 && mouseX < width/2 + 75 && mouseY > height/2 + 75 && mouseY < height/2 + 125) { 
-    println(true);
-      for (int i = 0; i < 6; i++) {
+    rooms = new Room[6];
+    for (int i = 0; i < 6; i++) {
+      rooms[i] = new Room();
+    }
+    for (int i = 0; i < 6; i++) {
       roomsCompleted[i] = false;
     }
     restartGame();
@@ -224,7 +228,7 @@ void keyPressed() {
       resetGame();
   } else {
     // Reset game if '1' key is pressed
-    if (key == '1' & room == null) {
+    if (key == '1' && room == null) {
       resetGame();
     } else {
       player.onKeyPressed();
@@ -237,6 +241,7 @@ void keyPressed() {
 boolean checkRoomCompleted(int roomNum) {
   if (roomsCompleted[roomNum] == false) {
       room = rooms[roomNum];
+      //println(room, "room set");
       return false;
    }
    return true; 
@@ -255,7 +260,6 @@ void checkRoomChosen() {
     if (checkRoomCompleted(roomTracker) == true) {
       pma.state = false;
       pma.setFillColor(color(#C93D3D));
-      
     }
   
   } else if (stad.state) {
@@ -292,17 +296,20 @@ void checkRoomChosen() {
     }
     
   } else {
-    room = null; 
+    //room = null; 
+    //keyCollected = false;
   }
   // only show buttons if we are not inside a room
-  if (room != null && !keyCollected) {
+  if (room != null  && !keyCollected) {
+    
     room.display();
     player.update_position();
     player.show();
     levels.levelBehavior();
    
   } else {
-    room = null;
+    
+    //room = null; // ??
     //drawOutsides();
     //background(181,222,186);
     drawOutside();
@@ -334,25 +341,19 @@ boolean checkGameWon() {
 
 
 void resetGame() {
-  
-  //gameState = NOT_STARTED;
   player = new Player();
-  //howTo.state = false;
-  enemies.clear();
+  //enemies.clear();
   bullets.clear();
   powerups.clear();
   gameState = STARTED;
-  timePlayed = 0;
   keys = null; // Reset the key
   loop();
 }
 
 void restartGame() {
   player = new Player();
-  //keyCollected = false;
-  //howTo.state = false;
-  
-  enemies.clear();
+
+  //enemies.clear();
   bullets.clear();
   powerups.clear();
   gameState = NOT_STARTED;

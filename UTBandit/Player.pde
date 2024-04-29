@@ -15,10 +15,7 @@ class Player {
   }
   
   void show() {
-    //ellipseMode(CENTER);
-    //fill(255);
-    //stroke(0);
-    //ellipse(this.position.x, this.position.y, 40, 40);
+
     sprite.show(this.position.x, this.position.y);
     
     if (debug) {

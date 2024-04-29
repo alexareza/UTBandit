@@ -13,6 +13,12 @@ class Room {
     int tileSize = 100; // Size of each tile
     PFont font = createFont("arcade2.ttf",50);
     int enemiesDied;
+    float roomLeftBound;
+    float roomRightBound;
+    float roomTopBound;
+    float roomBottomBound;
+    //float boxX;
+    //float boxY;
     
   Room() {
     rectMode(CENTER);
@@ -23,10 +29,10 @@ class Room {
     outsideTexture.resize(200,200);
     floorTexture.resize(100,100);
     exit = new ButtonToggle(60, 95, s*3, s *1.5, "exit");
-    
   }
 
   void display() {
+    //player.position = new PVector(width/2,height/2);
     imageMode(CENTER);
     // draw room graphics
     rectMode(CENTER);
@@ -52,23 +58,22 @@ class Room {
     
     // if the exit button is pressed
     if (exit.state) {
+
       pma.state = false;
       gdc.state = false;
       stad.state = false;
       mc.state = false;
       pcl.state = false;
-      room = null;
-      image(backgroundImage,width/2,height/2);
-      //enemies.clear();
+
       levels.enemiesSpawned = false;
-      //levels.increaseLevel();
-      //gameState = STARTED;
-      //resetGame();
-      player.position = new PVector(width/2,height/2);
+
+      room = null;
+      player.position = new PVector(width/3,height/2);
       keys = null; // Reset the key
       exit.state = false;
     } 
-
+    checkRoomCompleted();
+    updateEntities();
     if (player.health <= 0) {
       gameState = LOST;
 
@@ -85,8 +90,7 @@ class Room {
       difficulty += .5;
       lastTime = millis();
     }
-    checkRoomCompleted();
-    updateEntities(); 
+     
       
     if (enemies.isEmpty() && keys == null) {
       // Create a key
@@ -153,8 +157,14 @@ class Room {
     roomHeight = int(random(roomMinHeight, roomMaxHeight));
     roomWidth = round(roomWidth / tileSize) * tileSize;
     roomHeight = round(roomHeight / tileSize) * tileSize;
+    
     boxX = roomWidth / 2;
     boxY = roomHeight / 2;
+    
+    roomLeftBound = width / 2 - roomWidth / 2;
+    roomRightBound = width / 2 + roomWidth / 2;
+    roomTopBound = height / 2 - roomHeight / 2;
+    roomBottomBound = height / 2 + roomHeight / 2;
   }
   
   
@@ -170,9 +180,10 @@ class Room {
       pcl.state = false;
       image(backgroundImage,width/2,height/2);
       levels.increaseLevel();
-      resetGame();
+      //resetGame();
+      room = null;
       keys = null; // Reset the key
-    }
+    } 
   }
   
   void updateTracker() {
@@ -199,12 +210,14 @@ class Room {
   }
   
   void updateEntities() {
+    
     for (Bullet bullet : bullets) {
       bullet.update();
       bullet.display();
     }
     
     for (Enemy enemy: enemies) {
+
       enemy.update(enemies); // Update enemy position
       enemy.display();
       
@@ -236,7 +249,7 @@ class Room {
     // Make sure that enemies that collided with the player respawn, preventing an "easy win" where player lets enemies hit player in early levels
     for (int i = 0; i < enemiesDied; i++) {
       int levelHealth = levels.determineHealth();
-      enemies.add(new Enemy(levelHealth, 10, 1));
+      enemies.add(new Enemy(levelHealth, 10));
     }
     enemiesDied = 0;
     bullets.removeAll(bulletsToRemove);

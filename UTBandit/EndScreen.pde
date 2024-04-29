@@ -37,7 +37,7 @@ class EndScreen {
   
   void show_play_again_button() {
     textAlign(CENTER);
-    //rectMode(CENTER);
+    rectMode(CENTER);
     fill(172,88,33);
     rect(width/2, height/2 + 100, 200, 50, 10);
     fill(255);

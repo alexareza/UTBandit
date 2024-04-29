@@ -31,7 +31,8 @@ class StartScreen {
     
   void show() {
 
-    
+    imageMode(CENTER);
+    textAlign(CENTER, CENTER);
     tileSize = 200;
     float xPos = 0;
     float yPos = 0;

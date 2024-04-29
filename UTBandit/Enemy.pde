@@ -8,15 +8,31 @@ class Enemy {
   float speed;
   float radius;
   color c;
-
-  float roomLeftBound = width / 2 - room.roomWidth / 2;
-  float roomRightBound = width / 2 + room.roomWidth / 2;
-  float roomTopBound = height / 2 - room.roomHeight / 2;
-  float roomBottomBound = height / 2 + room.roomHeight / 2;
+  float roomLeftBound = width / 2;
+  float roomRightBound = width / 2;
+  float roomTopBound = height / 2;
+  float roomBottomBound = height / 2;
   PImage enemySkin = loadImage("soot.png");
-  
-
-  Enemy(int h, int damage, int diff) {
+  Enemy(int h, int damage) {
+    if (room != null) {
+      println("room not null");
+      roomLeftBound = width / 2 - room.roomWidth / 2;
+      roomRightBound = width / 2 + room.roomWidth / 2;
+      roomTopBound = height / 2 - room.roomHeight / 2;
+      roomBottomBound = height / 2 + room.roomHeight / 2;
+      boxX = room.getBoxX();
+      boxY = room.getBoxY();
+      
+    } else {
+    // If room is null, set some default values to avoid crashing
+    roomLeftBound = 0;
+    roomRightBound = width;
+    roomTopBound = 0;
+    roomBottomBound = height;
+    boxX = 200;
+    boxY = 200;
+  }
+   
     health = h;
     maxHealth = h;
     damageAmt = damage;
@@ -25,14 +41,12 @@ class Enemy {
     float centerX = width/2;
     float centerY = height/2;
 
-    boxX = room.getBoxX();
-    boxY = room.getBoxY();
+   
     position = new PVector(random(centerX - boxX + 10, centerX + boxX) -10, random(centerY - boxY +10, centerY + boxY - 10));
         
     direction = new PVector(0, 0);
     speed = 0.5;
     radius = 20;
-    //c = color(random(255), random(255), random(255));
   }
 
   void update(ArrayList<Enemy> otherEnemies) {
@@ -66,7 +80,6 @@ class Enemy {
   }
 
   void display() {
-    //fill(c);
     image(enemySkin, position.x, position.y, 25, 25);
     
     drawHealthBar(); // Call drawHealthBar to display health bar
