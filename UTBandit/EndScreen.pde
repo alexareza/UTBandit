@@ -1,13 +1,15 @@
 class EndScreen {
   
-   PImage bg = loadImage("roomfloor.jpeg");
- 
+  PImage bg = loadImage("roomfloor.jpeg");
+  float ytextPos;
   EndScreen() {
-    
     textAlign(CENTER);
     bg.resize(200,200);
   }
+  
    void show() {
+    float displacement = 20 * sin(TWO_PI * frameCount / 180);
+    ytextPos = height / 4 + displacement;
     textAlign(CENTER);
     tileSize = 200;
     float xPos = 0;
@@ -26,22 +28,23 @@ class EndScreen {
     fill(255);
     textSize(50);
   }
+  
   void show_scoreBoard(ScoreBoard scoreBoard) {
     textAlign(CENTER);
     textSize(25);
-    text("SCOREBOARD", width / 2, height - 200);
+    text("SCOREBOARD", width / 2, height - 300);
     textSize(20);
-    text(scoreBoard.scoreString(), width / 2, height - 130);
+    text(scoreBoard.scoreString(), width / 2, height - 230);
   }
   
   void show_play_again_button() {
     textAlign(CENTER);
     rectMode(CENTER);
     fill(172,88,33);
-    rect(width/2, height/2 + 100, 200, 50, 10);
+    rect(width/2, height/3 + 100, 200, 50, 10);
     fill(255);
     textSize(18);
-    text("PLAY AGAIN", width/2, height/2 + 110);
+    text("PLAY AGAIN", width/2, height/3 + 110);
   }
   
   void show_score_this_run(int secondsPlayed) {
@@ -52,15 +55,15 @@ class EndScreen {
   void show_loss() {
     textAlign(CENTER);
     show();
-    text("YOU LOST", width / 2, height / 4);
-    text("GAME OVER", width / 2, height / 2);
+    text("YOU LOST", width / 2, height / 4 -20);
+    text("GAME OVER", width / 2, height / 4 + 60);
     show_play_again_button();
   }
   
   void show_win(int secondsPlayed) {
     textAlign(CENTER);
     show();
-    text("YOU WON!", width / 2, height / 4);
+    text("YOU WON!", width / 2, ytextPos);
     show_score_this_run(secondsPlayed);
     show_play_again_button();
   }

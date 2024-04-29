@@ -17,8 +17,6 @@ class Room {
     float roomRightBound;
     float roomTopBound;
     float roomBottomBound;
-    //float boxX;
-    //float boxY;
     
   Room() {
     rectMode(CENTER);
@@ -76,11 +74,14 @@ class Room {
     updateEntities();
     if (player.health <= 0) {
       gameState = LOST;
-
     }
-    
-    if (gameState == WON || gameState == LOST) {
+    if (gameState == LOST) {
+    //if (gameState == WON || gameState == LOST) {
+      
       endScreen.show();
+      endScreen.show_loss();
+      endScreen.show_scoreBoard(scoreBoard);
+      player.position = new PVector(-10,-10);
       noLoop(); 
       return; 
     }
@@ -178,7 +179,7 @@ class Room {
       stad.state = false;
       mc.state = false;
       pcl.state = false;
-      image(backgroundImage,width/2,height/2);
+      //image(backgroundImage,width/2,height/2);
       levels.increaseLevel();
       //resetGame();
       room = null;

@@ -150,6 +150,8 @@ void draw() {
       checkRoomChosen();
       break;
     case LOST:
+    println("lost");
+      endScreen.show();
       endScreen.show_loss();
       endScreen.show_scoreBoard(scoreBoard);
       break;
@@ -204,8 +206,10 @@ void mousePressed() {
   }
   
   exit.onMousePress();
-
-  if ((gameState == WON || gameState == LOST) && mouseX > width/2 - 75 && mouseX < width/2 + 75 && mouseY > height/2 + 75 && mouseY < height/2 + 125) { 
+  if ((gameState == WON || gameState == LOST) && mouseX > width/2 - 100 && mouseX < width/2 + 100 &&
+      mouseY > height/3 + 50 && mouseY < height/3 + 150) { 
+    //room = null;
+    
     rooms = new Room[6];
     for (int i = 0; i < 6; i++) {
       rooms[i] = new Room();
@@ -215,7 +219,7 @@ void mousePressed() {
     }
     restartGame();
     
-  } else {
+  } else if (gameState != LOST) {
     
     player.onMousePressed(); // Call the onMousePressed method of the Player class
   }
@@ -333,18 +337,38 @@ void resetGame() {
   powerups.clear();
   gameState = STARTED;
   keys = null; // Reset the key
+  //gdc.setFillColor(color(172,88,33));
+  //pma.setFillColor(color(172,88,33));
+  //gdc.setFillColor(color(172,88,33));
+  //stad.setFillColor(color(172,88,33));
+  //mc.setFillColor(color(172,88,33));
+  //pcl.setFillColor(color(172,88,33));
   loop();
 }
 
 void restartGame() {
+  
   player = new Player();
-
+  gdc.setFillColor(color(172,88,33));
+  pma.setFillColor(color(172,88,33));
+  gdc.setFillColor(color(172,88,33));
+  stad.setFillColor(color(172,88,33));
+  mc.setFillColor(color(172,88,33));
+  pcl.setFillColor(color(172,88,33));
+  
+  gdc.state = false;
+  pma.state = false;
+  gdc.state = false;
+  stad.state = false;
+  mc.state = false;
+  pcl.state = false;
   //enemies.clear();
   bullets.clear();
   powerups.clear();
   gameState = NOT_STARTED;
   timePlayed = 0;
   keys = null; // Reset the key
+  room = null;
   startTime = millis();
   loop();
 }
