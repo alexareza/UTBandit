@@ -12,9 +12,9 @@ EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
 
-//boolean[] roomsCompleted = {true, true, true, true, true, false};
+boolean[] roomsCompleted = {true, true, true, true, true, false};
 
-boolean[] roomsCompleted = {false, false, false, false, false, false};
+//boolean[] roomsCompleted = {false, false, false, false, false, false};
 
 Room rooms[];
 Room room;
@@ -226,22 +226,16 @@ void keyPressed() {
   if (!howTo.state) {
     if (gameState == NOT_STARTED) {
       resetGame();
-  } else {
-    // Reset game if '1' key is pressed
-    if (key == '1' && room == null) {
-      resetGame();
     } else {
+    
       player.onKeyPressed();
     }
-  }
-  }
-  
+  } 
 }
 
 boolean checkRoomCompleted(int roomNum) {
   if (roomsCompleted[roomNum] == false) {
       room = rooms[roomNum];
-      //println(room, "room set");
       return false;
    }
    return true; 
@@ -263,7 +257,6 @@ void checkRoomChosen() {
     }
   
   } else if (stad.state) {
-    //println("room stad");
     roomTracker = 2;
     if (checkRoomCompleted(roomTracker) == true) {
       stad.state = false;
@@ -271,7 +264,6 @@ void checkRoomChosen() {
     }
 
   } else if (mc.state) {
-    //println("room mc");
     roomTracker = 3;
     if (checkRoomCompleted(roomTracker) == true) {
       mc.setFillColor(color(#C93D3D));
@@ -295,9 +287,6 @@ void checkRoomChosen() {
       roomsCompleted[5] = true; 
     }
     
-  } else {
-    //room = null; 
-    //keyCollected = false;
   }
   // only show buttons if we are not inside a room
   if (room != null  && !keyCollected) {
@@ -309,9 +298,6 @@ void checkRoomChosen() {
    
   } else {
     
-    //room = null; // ??
-    //drawOutsides();
-    //background(181,222,186);
     drawOutside();
     image(backgroundImage, width/2, height/2);
     

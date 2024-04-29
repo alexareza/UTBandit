@@ -4,7 +4,6 @@ class EndScreen {
  
   EndScreen() {
     
-    //imageMode(CENTER);
     textAlign(CENTER);
     bg.resize(200,200);
   }

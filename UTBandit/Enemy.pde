@@ -15,7 +15,6 @@ class Enemy {
   PImage enemySkin = loadImage("soot.png");
   Enemy(int h, int damage) {
     if (room != null) {
-      println("room not null");
       roomLeftBound = width / 2 - room.roomWidth / 2;
       roomRightBound = width / 2 + room.roomWidth / 2;
       roomTopBound = height / 2 - room.roomHeight / 2;

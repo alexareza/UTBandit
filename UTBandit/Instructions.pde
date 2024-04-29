@@ -69,10 +69,9 @@ class Instructions {
     
     text("WASD TO MOVE", width /2, height - 450);
     text("POINT + CLICK TO SHOOT", width / 2, height - 400);
-    text("PRESS 1 TO RESET", width /2, height - 350);
-    text("COLLECT POWERUPS", width /2, height - 300);
-    text("SURVIVE", width /2, height - 250);
-    text("BEAT YOUR HIGH SCORE!", width /2, height - 200);
+    text("COLLECT POWERUPS", width /2, height - 350);
+    text("SURVIVE", width /2, height - 300);
+    text("BEAT YOUR HIGH SCORE!", width /2, height - 250);
     
     
     
