@@ -22,6 +22,7 @@ class StartScreen {
     twinklingStars();
     imageMode(CENTER);
     textAlign(CENTER, CENTER);
+    rectMode(CENTER);
     grassFont = createFont("grassfont.ttf", 150);
     bg.resize(200,200);
     tower.resize(600,600);

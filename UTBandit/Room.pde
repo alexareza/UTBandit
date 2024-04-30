@@ -82,6 +82,8 @@ class Room {
       endScreen.show_loss();
       endScreen.show_scoreBoard(scoreBoard);
       player.position = new PVector(-10,-10);
+      imageMode(CENTER);
+      rectMode(CENTER);
       noLoop(); 
       return; 
     }

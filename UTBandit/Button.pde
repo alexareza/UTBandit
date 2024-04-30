@@ -55,7 +55,7 @@ class Button extends Clickable {
       strokeWeight(strokeWeight);
       ellipse(x, y, s, s2);
       textAlign(CENTER, CENTER);  
-      if (this.label != "BACK" && this.label != "exit" && this.label != "TOWER") {
+      if (this.label != "BACK" && this.label != "exit" && this.label != "TOWER" && this.label != "exitGame") {
         textSize(15);
        
         fill(0);

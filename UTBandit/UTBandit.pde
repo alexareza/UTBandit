@@ -27,6 +27,7 @@ ButtonToggle mc;
 ButtonToggle pcl;
 ButtonToggle tower;
 ButtonToggle exit;
+ButtonToggle exitGame;
 ButtonToggle howTo;
 ButtonToggle back;
 ButtonToggle[] buttons;
@@ -83,7 +84,6 @@ void setup() {
   textFont(gameFont);
   backgroundImage = loadImage("map.png");
   grassTexture = loadImage("grass.jpg");
-  
 
   // Resize map image to fit canvas size
   backgroundImage.resize(width, height);
@@ -93,7 +93,6 @@ void setup() {
   for (int i = 0; i < 6; i++) {
     rooms[i] = new Room();
   }
-  
   // create all buttons, arrays, screens, sounds
   gdc = new ButtonToggle(370, 420, s, s, "GDC");
   pma = new ButtonToggle(360, 165, s, s, "PMA");
@@ -103,7 +102,8 @@ void setup() {
   tower = new ButtonToggle(217, 381, 28, 28, "TOWER");
   howTo = new ButtonToggle(width/2, 300, 300, 70, "Instructions");
   back = new ButtonToggle(width/2, height-140, 150, 70, "BACK");
-  buttons = new ButtonToggle[]{gdc, pma, stad, mc, pcl};  
+  buttons = new ButtonToggle[]{gdc, pma, stad, mc, pcl};
+  exitGame = new ButtonToggle(60, 60, s*3, s *1.5, "exitGame");
   player = new Player();
   
   enemies = new ArrayList<Enemy>();
@@ -130,6 +130,7 @@ void setup() {
 }
 
 void draw() {
+  rectMode(CENTER);
   switch (gameState) {
     case NOT_STARTED:
       startScreen.show();
@@ -148,12 +149,10 @@ void draw() {
       }
       break;
     case STARTED:
-      image(backgroundImage,width/2,height/2);
       player.show();
       checkRoomChosen();
       break;
     case LOST:
-    println("lost");
       endScreen.show();
       endScreen.show_loss();
       endScreen.show_scoreBoard(scoreBoard);
@@ -184,6 +183,7 @@ void mousePressed() {
     howTo.onMousePress();
     back.onMousePress();
   }
+  
   // check the distance between the player and each button before allowing the click action
   if (dist(player.position.x, player.position.y, gdc.x, gdc.y) < buttonDistanceThreshold) {
     gdc.onMousePress();
@@ -209,6 +209,7 @@ void mousePressed() {
   }
   
   exit.onMousePress();
+  exitGame.onMousePress();
   if ((gameState == WON || gameState == LOST) && mouseX > width/2 - 100 && mouseX < width/2 + 100 &&
       mouseY > height/3 + 50 && mouseY < height/3 + 150) { 
     //room = null;
@@ -249,6 +250,19 @@ boolean checkRoomCompleted(int roomNum) {
 }
 
 void checkRoomChosen() {
+  if (exitGame.state) {
+    rooms = new Room[6];
+    for (int i = 0; i < 6; i++) {
+      rooms[i] = new Room();
+    }
+     for (int i = 0; i < 6; i++) {
+      roomsCompleted[i] = false;
+    }
+    exitGame.state = false;
+    
+    restartGame();
+  }
+  
   for (int i = 0; i < buttons.length; i++) {
     if (buttons[i].state) {
       roomTracker = i;
@@ -283,6 +297,9 @@ void checkRoomChosen() {
     image(backgroundImage, width/2, height/2);
     fill(0);
     text("Time Played: " + ((millis() - startTime) /1000) + " sec", 150, 20);
+    exitGame.show();
+    fill(255);
+    text("EXIT", 62, 60);
     pma.show();
     gdc.show();
     stad.show();
@@ -314,16 +331,20 @@ void resetGame() {
   powerups.clear();
   gameState = STARTED;
   keys = null; // Reset the key
-
+  
   loop();
 }
 
 void restartGame() {
+  imageMode(CENTER);
+  rectMode(CENTER);
+  
   for (int i = 0; i < buttons.length; i++) {
     buttons[i].state = false;
-    buttons[i].setFillColor(color(#C93D3D));
+    buttons[i].setFillColor(color(172,88,33));
   }
-  
+  levels.currentLevel = 1;
+  levels.resetGame();
   player = new Player();
   tower.state = false;
   bullets.clear();

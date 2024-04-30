@@ -85,10 +85,14 @@ class Enemy {
   }
 
   void drawHealthBar() {
+    rectMode(CORNER);
+    float fullWidth = map(maxHealth, 0, maxHealth, 0, 20); // Full width
     float barWidth = map(health, 0, maxHealth, 0, 20);
     float barHeight = 3;
     float xOffset = position.x - barWidth / 2;
     float yOffset = position.y - radius - 10; // Place health bar overhead
+    fill(255);
+    rect(xOffset, yOffset, fullWidth, barHeight);
     fill(255, 0, 0);
     rect(xOffset, yOffset, barWidth, barHeight);
   }

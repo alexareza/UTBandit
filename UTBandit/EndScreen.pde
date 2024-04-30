@@ -4,6 +4,8 @@ class EndScreen {
   float ytextPos;
   EndScreen() {
     textAlign(CENTER);
+    imageMode(CENTER);
+    rectMode(CENTER);
     bg.resize(200,200);
   }
   
