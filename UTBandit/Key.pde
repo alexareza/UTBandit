@@ -5,12 +5,9 @@ class Keys {
   Sprite keySprite; // Declare keySprite variable in the Keys class
 
   Keys() {
-    
     float centerX = width/2;
     float centerY = height/2;
-    
     position = new PVector(random(centerX - boxX + 10, centerX + boxX) -10, random(centerY - boxY +10, centerY + boxY - 10));
- 
     radius = 3;
     initializeSprite(); // Initialize the sprite when creating a new Keys object
     keySound.play();

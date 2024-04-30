@@ -1,0 +1,73 @@
+UT Bandit
+Our final project will be a game in which the objective is to collect keys around a simplified map of UT to “unlock” the UT Tower.
+We will have a total of ~5 buildings that the player will have to “conquer”. Each building will spawn a random number of enemies with a random amount of health, and the player will need to defeat the enemies in order to obtain a “key”. The player will have a health bar. If the player is defeated by the enemies, the game will end. If the player conquers all of the buildings and obtains all of the keys, they will have the ability to unlock the tower. Once the player “unlocks” the tower, they will win the game. They will have the option to play again for a higher score.
+We will implement a high score system, with the highest score being the fastest time that the player was able to “win” the game.
+
+
+The requirements will be fulfilled as such:
+
+1. Keyboard interactivity. The project must support keystrokes, which trigger some interesting functionality.
+
+2. The player will be able to “move” around the map by using the keyboard, either WASD or arrow keys. The player will also be able to “shoot” enemies to defeat them, and click on buildings and keys to interact with them.
+
+3. Multiple GUI systems. The project must have at least two GUI systems.
+We will implement a “main menu” screen, a “game over”, and a “victory” screen. All will display high score information, and the ending screens will have the option to play again.
+
+4. Class objects with animation hierarchies. The project must include objects with at least two levels of animation hierarchy (similar to what you created in Assignment 4).
+There are sparks that follow the direction of each bullet the player shoots, which represents the object with animation hierarchy
+
+5. Data input/output. We will keep a record of high scores. These will be displayed in GUI screens and updated with the times it takes for the player to finish the game. 
+
+6. Sound. The project must include some background music throughout the game. 
+Other sound components would include sounds for everytime the player shoots, everytime a powerful is spawned, and everytime a key spawns/is collected. 
+
+
+Code Breakdown
+
+Enemies class (Nhi, Alexa)
+
+Enemies will move toward the player to inflict damage, avoiding collisions between each other
+Enemies will be contained within the building and once the player unlocks the door of the building, enemies can move out 
+Each enemy will have a set amount of health and amount of “strength” or damage amount that they inflict
+For each level, enemies become more difficult to defeat, requiring an additional collision with the bullets, which will reflect in the health bar. 
+
+Player Class & Design (Nhi, Trevor)
+
+Player will be able to navigate throughout the map through WASD and shoot bullets upon click
+Players can collect power ups throughout the game to increase the number of bullets shot from their weapon 
+Player health decreases when collides with enemy
+
+“Buildings” Class & Design (Alexa)
+
+Each building will be randomly generated inside, such as the background and size of the room
+When the player enters a room, enemies will spawn within the boundaries of the room.
+Once enemies are defeated, a key will appear for the user to collect.
+The player can enter by navigating to the circle on the map and clicking the circle and exit by clicking an exit button.
+
+Key Class (Nhi)
+
+Includes key graphics/animation/sound effects
+Keys will appear within each building once all enemies have been defeated. When the player collides with the key, the player will return to the map
+
+Map Creation & Design (Alexa)
+
+Create a simple map of UT with about 5 buildings to be defeated, not including the tower
+All graphics & logic were obtained, created, and implemented.
+
+GUI Creation (Alexa, Nhi, Trevor)
+
+Start Screen: shows game instructions for how to navigate along with option to start
+Gameover screen: after user wins or loses and the game ends, screen displays leaderboard, game stats, option to play again
+Health bar, level, number of kills: Displayed throughout the game on screen 
+Level will increase every time that the user collects a key 
+Health bar will start at 100% and decrease when the player collides with an enemy 
+Number of kills increases keeping track of the number of enemies that the player kills 
+
+Animation Sprites (Nhi & Trevor)
+Animation sprites for the player, key, bullets
+
+Sound (Nhi)
+Bullets will have a sound, a sound when a key is collected, and a sound when powerups appear
+
+Game logic (Alexa)
+Putting together all classes and files, and actually making them work together.

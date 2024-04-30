@@ -1,25 +1,27 @@
 import processing.sound.*;
 
+// DEBUGGING MODE
+//boolean[] roomsCompleted = {true, true, true, true, true, false};
+
+// REGULAR USER MODE
+boolean[] roomsCompleted = {false, false, false, false, false, false};
+
 PImage backgroundImage;
 PImage grassTexture;
 int tileSize = 200;
-
 PFont gameFont;
-Player player;
 
+Player player;
 Instructions instructions;
 EndScreen endScreen;
 StartScreen startScreen;
 ScoreBoard scoreBoard;
 
-boolean[] roomsCompleted = {true, true, true, true, true, false};
-
-//boolean[] roomsCompleted = {false, false, false, false, false, false};
 
 Room rooms[];
 Room room;
-ButtonToggle pma;
 ButtonToggle gdc;
+ButtonToggle pma;
 ButtonToggle stad;
 ButtonToggle mc;
 ButtonToggle pcl;
@@ -27,6 +29,7 @@ ButtonToggle tower;
 ButtonToggle exit;
 ButtonToggle howTo;
 ButtonToggle back;
+ButtonToggle[] buttons;
 
 int roomTracker;
 boolean roomComplete = false;
@@ -90,23 +93,25 @@ void setup() {
   for (int i = 0; i < 6; i++) {
     rooms[i] = new Room();
   }
-  //Button ellipseButton = new Button(100, 100, 50, "Ellipse Button", color(255), color(0), color(0), 1, 12);
-  //tower = new ButtonToggle(x, y, s, "Tower")
-  pma = new ButtonToggle(360, 165, s, s, "PMA");
+  
+  // create all buttons, arrays, screens, sounds
   gdc = new ButtonToggle(370, 420, s, s, "GDC");
+  pma = new ButtonToggle(360, 165, s, s, "PMA");
   stad = new ButtonToggle(583, 411, s, s, "STADIUM");
   mc = new ButtonToggle(685, 625, s, s, "MOODY CENTER");
   pcl = new ButtonToggle(275, 525, s, s, "PCL");
   tower = new ButtonToggle(217, 381, 28, 28, "TOWER");
   howTo = new ButtonToggle(width/2, 300, 300, 70, "Instructions");
   back = new ButtonToggle(width/2, height-140, 150, 70, "BACK");
-  
+  buttons = new ButtonToggle[]{gdc, pma, stad, mc, pcl};  
   player = new Player();
+  
   enemies = new ArrayList<Enemy>();
   bullets = new ArrayList<Bullet>();
   enemiesToRemove = new ArrayList<Enemy>();
   bulletsToRemove = new ArrayList<Bullet>();
   powerups = new ArrayList<Powerup>();
+  
   endScreen = new EndScreen();
   startScreen = new StartScreen();
   scoreBoard = new ScoreBoard();
@@ -125,8 +130,6 @@ void setup() {
 }
 
 void draw() {
-  
-  //println(timePlayed);
   switch (gameState) {
     case NOT_STARTED:
       startScreen.show();
@@ -246,41 +249,18 @@ boolean checkRoomCompleted(int roomNum) {
 }
 
 void checkRoomChosen() {
+  for (int i = 0; i < buttons.length; i++) {
+    if (buttons[i].state) {
+      roomTracker = i;
+      if (checkRoomCompleted(roomTracker)) {
+        buttons[i].setFillColor(color(#C93D3D));
+        buttons[i].state = false;
+      }
+      break; // Exit the loop after handling one button
+    }
+  }
 
-  if (gdc.state) {
-    roomTracker = 0;
-    if (checkRoomCompleted(roomTracker) == true) {
-      gdc.setFillColor(color(#C93D3D));
-      gdc.state = false;
-    }
-  } else if (pma.state) {
-    roomTracker = 1;
-    if (checkRoomCompleted(roomTracker) == true) {
-      pma.state = false;
-      pma.setFillColor(color(#C93D3D));
-    }
-  
-  } else if (stad.state) {
-    roomTracker = 2;
-    if (checkRoomCompleted(roomTracker) == true) {
-      stad.state = false;
-      stad.setFillColor(color(#C93D3D));
-    }
-
-  } else if (mc.state) {
-    roomTracker = 3;
-    if (checkRoomCompleted(roomTracker) == true) {
-      mc.setFillColor(color(#C93D3D));
-      mc.state = false;
-    }
-
-  } else if (pcl.state) {
-    roomTracker = 4;
-    if (checkRoomCompleted(roomTracker) == true) {
-      pcl.setFillColor(color(#C93D3D));
-      pcl.state = false;
-    }
-  } else if (tower.state) {
+  if (tower.state) {
     boolean complete = true;
     for (int i = 0; i < 5; i++) {
       if (roomsCompleted[i] == false) {
@@ -290,21 +270,19 @@ void checkRoomChosen() {
     if (complete) {
       roomsCompleted[5] = true; 
     }
-    
   }
   // only show buttons if we are not inside a room
   if (room != null  && !keyCollected) {
-    
     room.display();
     player.update_position();
     player.show();
     levels.levelBehavior();
-   
-  } else {
-    
+   // we are on main map
+  } else { 
     drawOutside();
     image(backgroundImage, width/2, height/2);
-    
+    fill(0);
+    text("Time Played: " + ((millis() - startTime) /1000) + " sec", 150, 20);
     pma.show();
     gdc.show();
     stad.show();
@@ -312,7 +290,6 @@ void checkRoomChosen() {
     pcl.show();
     tower.show();
     player.update_position();
-
     player.show();
     keyCollected = false;
   } 
@@ -337,32 +314,18 @@ void resetGame() {
   powerups.clear();
   gameState = STARTED;
   keys = null; // Reset the key
-  //gdc.setFillColor(color(172,88,33));
-  //pma.setFillColor(color(172,88,33));
-  //gdc.setFillColor(color(172,88,33));
-  //stad.setFillColor(color(172,88,33));
-  //mc.setFillColor(color(172,88,33));
-  //pcl.setFillColor(color(172,88,33));
+
   loop();
 }
 
 void restartGame() {
+  for (int i = 0; i < buttons.length; i++) {
+    buttons[i].state = false;
+    buttons[i].setFillColor(color(#C93D3D));
+  }
   
   player = new Player();
-  gdc.setFillColor(color(172,88,33));
-  pma.setFillColor(color(172,88,33));
-  gdc.setFillColor(color(172,88,33));
-  stad.setFillColor(color(172,88,33));
-  mc.setFillColor(color(172,88,33));
-  pcl.setFillColor(color(172,88,33));
-  
-  gdc.state = false;
-  pma.state = false;
-  gdc.state = false;
-  stad.state = false;
-  mc.state = false;
-  pcl.state = false;
-  //enemies.clear();
+  tower.state = false;
   bullets.clear();
   powerups.clear();
   gameState = NOT_STARTED;

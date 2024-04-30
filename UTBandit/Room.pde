@@ -149,7 +149,7 @@ class Room {
     float percentage_health = (float(player.health) / 50) * 100;
     
     text(nf(percentage_health, 0, 0)+ "%", 22, 38);
-    text("Score: " + player.score, 20, 60);
+    text("Time Played: " + ((millis() - startTime) /1000) + " sec", 20, 60);
     text("Difficulty Multiplier: x" + difficulty, 512, 38);
   }
   
@@ -172,6 +172,8 @@ class Room {
   void checkRoomCompleted() {
     // Check for collision with the key
     if (keys != null && keys.collidesWithPlayer(player)) {
+      
+      buttons[roomTracker].setFillColor(color(#C93D3D));
       keyCollected = true;
       updateTracker();
       pma.state = false;

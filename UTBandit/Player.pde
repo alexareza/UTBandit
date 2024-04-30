@@ -1,11 +1,16 @@
 class Player {
   PVector position;
   PVector look;
+  
+  // REGULAR USER MODE
   int health = 50;
+  
+  // DEBUGGING MODE
+  // int health = 10;
+  
   int score = 0;
   private PVector movement = new PVector(0, 0);
   private boolean debug = false;
-  
   EntitySprite sprite;
   
   Player() {
@@ -15,7 +20,6 @@ class Player {
   }
   
   void show() {
-
     sprite.show(this.position.x, this.position.y);
     
     if (debug) {
@@ -82,18 +86,22 @@ class Player {
   void onKeyPressed() {
     switch (key) {
       case 'w':
+      case 'W':
         this.movement.y = -1.5;
         this.sprite.facing = this.sprite.UP;
         break;
       case 'a':
+      case 'A':
         this.movement.x = -1.5;
         this.sprite.facing = this.sprite.LEFT;
         break;
       case 's':
+      case 'S':
         this.movement.y = 1.5;
         this.sprite.facing = this.sprite.DOWN;
         break;
       case 'd':
+      case 'D':
         this.movement.x = 1.5;
         this.sprite.facing = this.sprite.RIGHT;
         break;
@@ -103,15 +111,19 @@ class Player {
   void onKeyReleased() {
     switch (key) {
       case 'w':
+      case 'W':
         this.movement.y = 0;
         break;
       case 'a':
+      case 'A':
         this.movement.x = 0;
         break;
       case 's':
+      case 'S':
         this.movement.y = 0;
         break;
       case 'd':
+      case 'D':
         this.movement.x = 0;
         break;
     }
@@ -123,12 +135,12 @@ class Player {
   
   void onMousePressed() {
     switch (mouseButton) {
-      case LEFT:
-        shoot();
-        if (room != null) {
-          shootingSound.play();
+    case LEFT:
+      shoot();
+      if (room != null) {
+        shootingSound.play();
+      }
     }
-  }
   }
 
   void increaseBulletCount() {

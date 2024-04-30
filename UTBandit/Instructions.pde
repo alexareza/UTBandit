@@ -72,9 +72,6 @@ class Instructions {
     text("COLLECT POWERUPS", width /2, height - 350);
     text("SURVIVE", width /2, height - 300);
     text("BEAT YOUR HIGH SCORE!", width /2, height - 250);
-    
-    
-    
   }
 
   void twinklingStars() {
@@ -101,7 +98,6 @@ class Instructions {
     stroke (255);
   
     for (int i=0; i < 250; i++) {
-  
       line (xStarPos[i]+p, yStarPos[i], xStarPos[i], yStarPos[i]);
       line (xStarPos[i], yStarPos[i]+p, xStarPos[i], yStarPos[i]);
       line (xStarPos[i], yStarPos[i], xStarPos[i]-p, yStarPos[i]);

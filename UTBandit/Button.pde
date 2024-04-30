@@ -54,9 +54,13 @@ class Button extends Clickable {
       //stroke(stroke);
       strokeWeight(strokeWeight);
       ellipse(x, y, s, s2);
-  
-      textAlign(CENTER, CENTER);
-      fill(0);
+      textAlign(CENTER, CENTER);  
+      if (this.label != "BACK" && this.label != "exit" && this.label != "TOWER") {
+        textSize(15);
+       
+        fill(0);
+        text(this.label, x, y +25);
+      }
     }
   }
   
