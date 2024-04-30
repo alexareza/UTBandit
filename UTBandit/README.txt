@@ -23,3 +23,22 @@ If you would like to customize a game to test with different rooms active, here 
 boolean[] roomsCompleted = {false, false, false, false, false, false};
 == {GDC, PMA, STADIUM, MOODY CENTER, PCL, UT TOWER};
 False means a room has not been completed and a key has not been collected for that room. True means the opposite.
+
+ASSET CREDITS:
+
+Player Sprite: https://www.artstation.com/artwork/d0511A
+Enemy Sprite: https://lookhuman.com/products/430195-a-trio-of-soot-sprites-diecut
+
+Map Textures:
+UT map: Edited UT Eclipse Sun Spot map
+grass: https://2minutetabletop.com/product/tiling-grass-textures/
+
+Room Textures:
+https://www.deviantart.com/makestuffhapen/art/Dungeon-Floor-01-423456584
+https://www.deviantart.com/makestuffhapen/art/Dungeon-Floor-02-423456902
+Key: https://www.tumblr.com/loganslevel/155525967889/pixelated-key-gif
+Power up: https://robertfont.artstation.com/projects/RRA5r 
+
+Start Screen:
+https://thedailytexan.com/2021/04/08/ut-austin-campus-environmental-center-opens-seed-swap-in-ut-tower/
+(Sylvia Asunción-Crabb/The Daily Texan)
