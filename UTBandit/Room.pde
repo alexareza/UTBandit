@@ -31,6 +31,7 @@ class Room {
 
   void display() {
     //player.position = new PVector(width/2,height/2);
+    
     imageMode(CENTER);
     // draw room graphics
     rectMode(CENTER);
@@ -43,6 +44,17 @@ class Room {
     noFill();
     rect(width/2, height/2, roomWidth, roomHeight);
     initializeGame();
+    noStroke();
+    imageMode(CENTER);
+    if (!muted) {
+      fill(0,255,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    } else if (muted){
+      fill(255,0,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    }
   }
   
   void initializeGame() {

@@ -31,7 +31,7 @@ class StartScreen {
   
     
   void show() {
-
+    
     imageMode(CENTER);
     textAlign(CENTER, CENTER);
     tileSize = 200;
@@ -72,6 +72,15 @@ class StartScreen {
     rect(width/2, ytextPos, 700, 80, 20);
     fill(255);
     text("Press Any Key to Start", width / 2, ytextPos);
+    if (!muted) {
+      fill(0,255,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    } else if (muted){
+      fill(255,0,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    }
 
   }
   

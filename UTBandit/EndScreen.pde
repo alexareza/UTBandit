@@ -10,6 +10,7 @@ class EndScreen {
   }
   
    void show() {
+    
     float displacement = 20 * sin(TWO_PI * frameCount / 180);
     ytextPos = height / 4 + displacement;
     textAlign(CENTER);
@@ -27,8 +28,18 @@ class EndScreen {
         image(bg, xPos, yPos, tileSize, tileSize);
       }
     }
-    fill(255);
+    
     textSize(50);
+   if (!muted) {
+    fill(0,255,0);
+    circle(960,35,60);
+    image(mute, 960, 35);
+    } else if (muted){
+      fill(255,0,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    }
+  fill(255);
   }
   
   void show_scoreBoard(ScoreBoard scoreBoard) {
