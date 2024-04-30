@@ -8,6 +8,8 @@ boolean[] roomsCompleted = {false, false, false, false, false, false};
 
 PImage backgroundImage;
 PImage grassTexture;
+PImage mute;
+
 int tileSize = 200;
 PFont gameFont;
 
@@ -69,6 +71,7 @@ int gameState = NOT_STARTED;
 int startTime;
 int timePlayed;
 
+boolean muted = false;
 SoundFile powerupSound;
 SoundFile shootingSound;
 SoundFile keySound;
@@ -79,14 +82,17 @@ SoundFile gameSound;
 
 void setup() {
   size(1000, 800);
+
   imageMode(CENTER);
   gameFont = createFont("arcade.ttf", 40);
   textFont(gameFont);
   backgroundImage = loadImage("map.png");
   grassTexture = loadImage("grass.jpg");
+  mute = loadImage("mute.png");
 
   // Resize map image to fit canvas size
   backgroundImage.resize(width, height);
+  mute.resize(60,60);
   
   // generate a random room for each room
   rooms = new Room[6];
@@ -124,13 +130,17 @@ void setup() {
   keySound = new SoundFile(this, "keySound.mp3");
   gameOverSound = new SoundFile(this, "gameover.mp3");
   gameWonSound = new SoundFile(this, "gamewon.mp3");
-  Sound.volume(.03);
-  gameSound.loop();
-  gameSound.play();
+    gameSound.loop();
 }
 
 void draw() {
+  if (muted) {
+    muteSound();
+  } else {
+    unmuteSound();
+  }
   rectMode(CENTER);
+  
   switch (gameState) {
     case NOT_STARTED:
       startScreen.show();
@@ -182,6 +192,11 @@ void mousePressed() {
   if (gameState == NOT_STARTED) {
     howTo.onMousePress();
     back.onMousePress();
+  }
+  float mutedist = dist(mouseX, mouseY, 960, 30);
+  if (mutedist <= 30) {
+        // Toggle mute state
+    muted = !muted;
   }
   
   // check the distance between the player and each button before allowing the click action
@@ -295,6 +310,16 @@ void checkRoomChosen() {
   } else { 
     drawOutside();
     image(backgroundImage, width/2, height/2);
+    if (!muted) {
+      fill(0,255,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    } else if (muted){
+      fill(255,0,0);
+      circle(960,35,60);
+      image(mute, 960, 35);
+    }
+
     fill(0);
     text("Time Played: " + ((millis() - startTime) /1000) + " sec", 150, 20);
     exitGame.show();
@@ -381,4 +406,12 @@ void drawOutside() {
       image(grassTexture, xPos, yPos, tileSize, tileSize);
     }
   }
+}
+
+void muteSound() {
+  Sound.volume(0);
+}
+
+void unmuteSound() {
+  Sound.volume(.03);
 }

@@ -6,7 +6,7 @@ class Player {
   int health = 50;
   
   // DEBUGGING MODE
-  // int health = 10;
+   //int health = 10;
   
   int score = 0;
   private PVector movement = new PVector(0, 0);
