@@ -1,5 +1,7 @@
 # UTBandit
-To run the program, open UTBandit.pde file and run the program. Click on the "How To Play Button" to view directions. Read the directions on the screen, click back to start the game.
+To run the program, you will need the program "Processing". https://processing.org/
+
+Once downloaded, open UTBandit.pde file and run the program. Click on the "How To Play Button" to view directions. Read the directions on the screen, click back to start the game.
 
 The objective of UT bandit is to collect keys around a map of UT to “unlock” the UT Tower. Player must navigate through all the rooms, defeat all the enemies, and collect all 5 keys before getting access to the UT Tower. Once the UT Tower is accessed, the player wins the game.
 
